@@ -10,7 +10,7 @@ import mysql.connector
 mydb = mysql.connector.connect(
   host="127.0.0.1",
   user="root",
-  password="12131213",
+  password="",
   database="website"
 )
 cursor=mydb.cursor(dictionary=True)
@@ -37,26 +37,11 @@ def signin():
     account_val=(account,)
     cursor.execute(account_sel,account_val)
     accountsql = cursor.fetchall()
-    # member=accountsql[0]
-    # print(member)
-    # secret_sel="SELECT * FROM member WHERE password=%s"
-    # secret_val=(secret,)
-    # cursor.execute(secret_sel,secret_val)
-    # secretsql = cursor.fetchall()
-    # print(accountsql[0]["username"])
-    # return "ok"
-    # cursor.execute("SELECT id,name,username,password FROM member")
-    # result = cursor.fetchall()
-    # for i in range(len(accountsql)):
     if accountsql!=[]:
         if accountsql[0]["username"]==account and accountsql[0]["password"]==secret:
             session["id"]=accountsql[0]["id"]
             session["account"]=accountsql[0]["name"]
-            return redirect("/member")
-        # elif accountsql[i]==[]:
-        #     return redirect(url_for("error",message="帳號或密碼輸入錯誤"))  
-        # else:
-            # return redirect(url_for("error",message="帳號或密碼輸入錯誤"))    
+            return redirect("/member") 
     else:
         return redirect(url_for("error",message="帳號或密碼輸入錯誤"))   
 
@@ -88,17 +73,6 @@ def signup():
     name=request.form["name"]
     account=request.form["account"]
     secret=request.form["secret"]
-    # cursor.execute("SELECT username FROM member")
-    # result = cursor.fetchall()
-    # for x in result:
-    #     if account==x["username"]:
-    #         return redirect(url_for("error",message="帳號已有人註冊"))
-    #     else:
-    #         sql="INSERT INTO member(name,username,password) VALUES (%s,%s,%s)"
-    #         val=(name,account,secret)
-    #         cursor.execute(sql,val)
-    #         mydb.commit()
-    #         return redirect("/")
     sql="SELECT * FROM member WHERE username=%s"
     usn=(account,)
     cursor.execute(sql,usn)
