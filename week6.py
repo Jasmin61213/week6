@@ -1,6 +1,4 @@
 from ssl import ALERT_DESCRIPTION_BAD_RECORD_MAC
-from statistics import mean
-from unittest import result
 from flask import Flask 
 from flask import request 
 from flask import redirect 
@@ -12,7 +10,7 @@ import mysql.connector
 mydb = mysql.connector.connect(
   host="127.0.0.1",
   user="root",
-  password="12131213",
+  password="",
   database="website"
 )
 cursor=mydb.cursor(dictionary=True)
