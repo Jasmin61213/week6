@@ -13,5 +13,18 @@
                 <div class="button1"><button >登出</button></div>
             </form>
         </div>
+        <hr>
+        <div class="text">快來留言吧</div>
+        <div  class="form">
+            <form action="/message" method="post">
+                <div class="input">留言: <input type="text" name="message"/></div>
+                <div class="button"><button>送出</button></div>
+            </form>
+        </div>
+        <hr>
+        <div class="text">留言板</div>
+            {% for i in data %}
+            <div class="message">{{ i.name }}:{{ i.content }}</div>
+            {% endfor %}
     </body>
 </html>
