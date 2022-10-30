@@ -1,4 +1,6 @@
 from ssl import ALERT_DESCRIPTION_BAD_RECORD_MAC
+from statistics import mean
+from unittest import result
 from flask import Flask 
 from flask import request 
 from flask import redirect 
@@ -10,7 +12,7 @@ import mysql.connector
 mydb = mysql.connector.connect(
   host="127.0.0.1",
   user="root",
-  password="",
+  password="12131213",
   database="website"
 )
 cursor=mydb.cursor(dictionary=True)
@@ -41,7 +43,7 @@ def signin():
         if accountsql[0]["username"]==account and accountsql[0]["password"]==secret:
             session["id"]=accountsql[0]["id"]
             session["account"]=accountsql[0]["name"]
-            return redirect("/member") 
+            return redirect("/member")
     else:
         return redirect(url_for("error",message="帳號或密碼輸入錯誤"))   
 
@@ -50,7 +52,11 @@ def signin():
 def member():
     if "account" in session:
         name=session["account"]
-        return render_template("member.html",name=name)
+        content_sel="SELECT name,content FROM member INNER JOIN message on member.id=message.member_id"
+        cursor.execute(content_sel)
+        result=cursor.fetchall()
+        row=result
+        return render_template("member.html",name=name,data=row)
     else:
         return redirect("/")
 
@@ -85,6 +91,16 @@ def signup():
         cursor.execute(sql,val)
         mydb.commit()
         return redirect("/")
+
+@app.route("/message",methods=["post"])
+def message():
+    member_id=session["id"]
+    message=request.form["message"]
+    sql="INSERT INTO message(member_id,content) VALUE (%s,%s)"
+    val=(member_id,message)
+    cursor.execute(sql,val)
+    mydb.commit()
+    return redirect("/member")
 
 # 埠號
 app.run(port=3000)
