@@ -89,7 +89,8 @@ def signup():
         cursor.execute(sql,val)
         mydb.commit()
         return redirect("/")
-
+      
+# 儲存留言頁面
 @app.route("/message",methods=["post"])
 def message():
     member_id=session["id"]
