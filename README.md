@@ -60,3 +60,10 @@ def message():
     </body>
 </html>
 ````
+
+```css
+.message{
+    text-align: center;
+    font-size:20px;
+}
+```
