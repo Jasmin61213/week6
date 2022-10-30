@@ -5,7 +5,7 @@
 def member():
     if "account" in session:
         name=session["account"]
-        content_sel="SELECT name,content FROM member INNER JOIN message on member.id=message.member_id"
+        content_sel="SELECT name,content FROM member INNER JOIN message  member.id=message.member_id"
         cursor.execute(content_sel)
         result=cursor.fetchall()
         row=result
